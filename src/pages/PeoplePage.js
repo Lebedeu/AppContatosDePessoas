@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 
-import Header from "../components/header";
 import PeopleList from "../components/PeopleList";
 
 export default class PeoplePage extends React.Component {
@@ -16,7 +15,7 @@ export default class PeoplePage extends React.Component {
 
   componentDidMount() {
     axios
-      .get('https://randomuser.me/api/?nat=br&results=5')
+      .get('https://randomuser.me/api/?nat=br&results=15')
       .then(response => {
         const { results } = response.data;
         this.setState({
@@ -27,9 +26,14 @@ export default class PeoplePage extends React.Component {
 
   render() {
     return (
+      // this.props.navigation.navigate('PeopleDetail'),
       <View>
-        <Header title="Contatos"/>
-        <PeopleList peoples={this.state.peoples}/>
+        <PeopleList
+          peoples={this.state.peoples}
+          onPressItem={pageParams => {
+            this.props.navigation.navigate('PeopleDetail', pageParams);
+          }}
+        />
       </View>
     );
   }
